@@ -1,0 +1,24 @@
+services:
+  agent:
+    build: .
+    container_name: browser-agent
+    env_file:
+      - .env
+    environment:
+      - DISPLAY=:99
+      - HEADLESS=false
+      - USER_DATA_DIR=/data/browser_profile
+    ports:
+      - "7900:7900"
+      - "5900:5900"
+    volumes:
+      - browser_profile:/data/browser_profile
+      - ./src:/app/src:ro
+    shm_size: "1gb"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true
+
+volumes:
+  browser_profile:
